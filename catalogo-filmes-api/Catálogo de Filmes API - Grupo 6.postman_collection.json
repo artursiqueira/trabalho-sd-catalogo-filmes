@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "c8de6dfa-d9f6-456d-8927-9435251b70f4",
     "name": "Catálogo de Filmes API - Grupo 6",
-    "description": "API REST para gerenciamento de catálogo de filmes - Sistemas Distribuídos UFES 2025/2\n\n**Desenvolvedores:** Mariana e Arthur\n**Framework:** Jersey (JAX-RS)\n**Banco de Dados:** MySQL",
+    "description": "API REST para gerenciamento de catálogo de filmes - Sistemas Distribuídos UFES 2025/2\n\n**Desenvolvedores:** Artur e Mariana\n**Framework:** Jersey (JAX-RS)\n**Banco de Dados:** MySQL",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52380215",
     "_collection_link": "https://go.postman.co/collection/52380215-c8de6dfa-d9f6-456d-8927-9435251b70f4?source=collection_link"
