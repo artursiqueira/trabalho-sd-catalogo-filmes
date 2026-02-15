@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Filmes API - Grupo 6</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .authors {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .endpoint {
+            background: #f1f3f5;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        .method {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+        .get { background: #51cf66; color: white; }
+        .post { background: #339af0; color: white; }
+        .put { background: #ff8c42; color: white; }
+        .delete { background: #ff6b6b; color: white; }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .info-box {
+            background: #e7f5ff;
+            border-left: 4px solid #339af0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        code {
+            background: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Catálogo de Filmes API</h1>
+        <p><strong>Sistemas Distribuídos - UFES 2025/2</strong></p>
+        
+        <div class="authors">
+            <h3>👥 Grupo 6</h3>
+            <p><strong>Dupla:</strong> Artur e Mariana</p>
+            <p><strong>Framework:</strong> Jersey (JAX-RS)</p>
+            <p><strong>Banco de Dados:</strong> MySQL</p>
+        </div>
+
+        <div class="info-box">
+            <strong>📡 Base URL:</strong> <code>http://localhost:8080/api</code>
+        </div>
+
+        <div class="info-box">
+            <strong>OBS:</strong> esta página serve como um guia rápido (tipo um mini-Swagger). Para executar as requisições corretamente
+            (principalmente o fluxo de autenticação e uso de token), use o <strong>Postman</strong> importando a collection do projeto.
+        </div>
+
+        <h2>🚀 Endpoints Principais</h2>
+
+        <h3>Autenticação</h3>
+        <div class="endpoint">
+            <span class="method post">POST</span> /auth/registrar - Registra usuário
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span> /auth/login - Faz login (retorna token JWT)
+        </div>
+
+        <h3>Filmes</h3>
+        <div class="endpoint">
+            <span class="method get">GET</span> /filmes - Lista todos os filmes (paginação e filtros)
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span> /filmes/{id} - Busca filme por ID
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span> /filmes - Cria novo filme 🔒
+        </div>
+        <div class="endpoint">
+            <span class="method put">PUT</span> /filmes/{id} - Atualiza filme completo 🔒
+        </div>
+        <div class="endpoint">
+            <span class="method put">PATCH</span> /filmes/{id} - Atualiza filme parcial 🔒
+        </div>
+        <div class="endpoint">
+            <span class="method delete">DELETE</span> /filmes/{id} - Remove filme 🔒
+        </div>
+
+        <p><strong>Exemplos de filtros:</strong></p>
+        <ul>
+            <li><code>?pagina=0&amp;tamanho=10</code> (paginação)</li>
+            <li><code>?titulo=matrix</code></li>
+            <li><code>?generoId=1</code></li>
+            <li><code>?diretor=nolan</code></li>
+        </ul>
+
+        <h3>Gêneros</h3>
+
+        <p><strong>Referência rápida (para usar em <code>generoId</code>):</strong></p>
+        <ul>
+            <li>1 - "Ação"</li>
+            <li>2 - "Comédia"</li>
+            <li>3 - "Drama"</li>
+            <li>4 - "Ficção Científica"</li>
+            <li>5 - "Terror"</li>
+            <li>6 - "Romance"</li>
+            <li>7 - "Suspense"</li>
+            <li>8 - "Animação"</li>
+            <li>9 - "Documentário"</li>
+            <li>10 - "Aventura"</li>
+        </ul>
+
+        <div class="endpoint">
+            <span class="method get">GET</span> /generos - Lista todos os gêneros
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span> /generos/{id} - Busca gênero por ID
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span> /generos/{id}/filmes - Lista filmes do gênero
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span> /generos - Cria novo gênero 🔒
+        </div>
+        <div class="endpoint">
+            <span class="method put">PUT</span> /generos/{id} - Atualiza gênero 🔒
+        </div>
+        <div class="endpoint">
+            <span class="method delete">DELETE</span> /generos/{id} - Remove gênero 🔒
+        </div>
+
+        <h2>🔑 Recursos Implementados</h2>
+        <ul>
+            <li>✅ Operações CRUD completas</li>
+            <li>✅ Autenticação JWT</li>
+            <li>✅ Paginação e filtros</li>
+            <li>✅ Relacionamentos entre entidades</li>
+            <li>✅ Tratamento de erros estruturado</li>
+            <li>✅ Documentação Postman</li>
+            <li>✅ Testes unitários e integração</li>
+        </ul>
+
+        <h2>📚 Documentação Completa</h2>
+        <p>Consulte a <strong>Postman Collection</strong> incluída no projeto para exemplos detalhados de requisições.</p>
+
+        <p style="margin-top: 30px; text-align: center; color: #888;">
+            🔒 Endpoints marcados requerem autenticação via token JWT
+        </p>
+    </div>
+</body>
+</html>
