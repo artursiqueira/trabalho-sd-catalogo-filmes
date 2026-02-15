@@ -1,0 +1,587 @@
+{
+  "info": {
+    "_postman_id": "c8de6dfa-d9f6-456d-8927-9435251b70f4",
+    "name": "Catálogo de Filmes API - Grupo 6",
+    "description": "API REST para gerenciamento de catálogo de filmes - Sistemas Distribuídos UFES 2025/2\n\n**Desenvolvedores:** Mariana e Arthur\n**Framework:** Jersey (JAX-RS)\n**Banco de Dados:** MySQL",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52380215",
+    "_collection_link": "https://go.postman.co/collection/52380215-c8de6dfa-d9f6-456d-8927-9435251b70f4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Registrar Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"maria\",\n  \"email\": \"maria@example.com\",\n  \"senha\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/registrar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "registrar"
+              ]
+            },
+            "description": "Registra um novo usuário no sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"jwt_token\", jsonData.token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"senha\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Realiza login e retorna um token JWT válido por 24 horas"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Filmes",
+      "item": [
+        {
+          "name": "Listar Todos os Filmes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/filmes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes"
+              ]
+            },
+            "description": "Lista todos os filmes cadastrados no sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Filmes com Paginação",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/filmes?pagina=0&tamanho=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes"
+              ],
+              "query": [
+                {
+                  "key": "pagina",
+                  "value": "0"
+                },
+                {
+                  "key": "tamanho",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": "Lista filmes com paginação. Retorna 5 filmes da primeira página."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Filme por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/filmes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes",
+                "1"
+              ]
+            },
+            "description": "Busca um filme específico pelo ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por Título",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/filmes?titulo=matrix",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes"
+              ],
+              "query": [
+                {
+                  "key": "titulo",
+                  "value": "matrix"
+                }
+              ]
+            },
+            "description": "Busca filmes por título (case-insensitive, busca parcial)"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por Gênero",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/filmes?generoId=4",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes"
+              ],
+              "query": [
+                {
+                  "key": "generoId",
+                  "value": "4"
+                }
+              ]
+            },
+            "description": "Filtra filmes por gênero"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por Diretor",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/filmes?diretor=nolan",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes"
+              ],
+              "query": [
+                {
+                  "key": "diretor",
+                  "value": "nolan"
+                }
+              ]
+            },
+            "description": "Busca filmes por diretor (case-insensitive, busca parcial)"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Filme",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Inception\",\n  \"sinopse\": \"Um ladrão que rouba segredos corporativos através do uso da tecnologia de compartilhamento de sonhos recebe a tarefa inversa de plantar uma ideia na mente de um CEO.\",\n  \"dataLancamento\": \"2010-07-16\",\n  \"duracao\": 148,\n  \"diretor\": \"Christopher Nolan\",\n  \"avaliacao\": 8.8,\n  \"posterUrl\": \"https://example.com/inception.jpg\",\n  \"generoId\": 4\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/filmes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes"
+              ]
+            },
+            "description": "Cria um novo filme. **REQUER AUTENTICAÇÃO**"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Filme (PUT)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Inception - A Origem\",\n  \"sinopse\": \"Um ladrão que rouba segredos corporativos através do uso da tecnologia de compartilhamento de sonhos recebe a tarefa inversa de plantar uma ideia na mente de um CEO.\",\n  \"dataLancamento\": \"2010-07-16\",\n  \"duracao\": 148,\n  \"diretor\": \"Christopher Nolan\",\n  \"avaliacao\": 9.0,\n  \"posterUrl\": \"https://example.com/inception.jpg\",\n  \"generoId\": 4\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/filmes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes",
+                "1"
+              ]
+            },
+            "description": "Atualiza completamente um filme existente. **REQUER AUTENTICAÇÃO**"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Filme Parcial (PATCH)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"avaliacao\": 9.2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/filmes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes",
+                "1"
+              ]
+            },
+            "description": "Atualiza parcialmente um filme (apenas campos enviados). **REQUER AUTENTICAÇÃO**"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Filme",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/filmes/10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "filmes",
+                "10"
+              ]
+            },
+            "description": "Remove um filme do sistema. **REQUER AUTENTICAÇÃO**"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gêneros",
+      "item": [
+        {
+          "name": "Listar Gêneros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/generos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "generos"
+              ]
+            },
+            "description": "Lista todos os gêneros disponíveis"
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Gênero por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/generos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "generos",
+                "1"
+              ]
+            },
+            "description": "Busca um gênero específico pelo ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Filmes de um Gênero",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/generos/4/filmes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "generos",
+                "4",
+                "filmes"
+              ]
+            },
+            "description": "Lista todos os filmes de um gênero específico"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Gênero",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Fantasia\",\n  \"descricao\": \"Filmes com elementos mágicos e fantásticos\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/generos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "generos"
+              ]
+            },
+            "description": "Cria um novo gênero. **REQUER AUTENTICAÇÃO**"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Gênero",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Fantasia Épica\",\n  \"descricao\": \"Filmes com elementos mágicos e fantásticos de grande escala\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/generos/11",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "generos",
+                "11"
+              ]
+            },
+            "description": "Atualiza um gênero existente. **REQUER AUTENTICAÇÃO**"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Gênero",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/generos/11",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "generos",
+                "11"
+              ]
+            },
+            "description": "Remove um gênero do sistema. **REQUER AUTENTICAÇÃO**"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api/api",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
