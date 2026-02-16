@@ -17,9 +17,6 @@ public class FilmeResource {
 
     private FilmeService filmeService = new FilmeService();
 
-    /**
-     * GET /filmes - Lista todos os filmes (com paginação opcional)
-     */
     @GET
     public Response listar(
             @QueryParam("pagina") @DefaultValue("0") int pagina,
@@ -28,7 +25,6 @@ public class FilmeResource {
             @QueryParam("generoId") Long generoId,
             @QueryParam("diretor") String diretor) {
         
-        // Filtros
         if (titulo != null && !titulo.isEmpty()) {
             List<FilmeDTO> filmes = filmeService.buscarPorTitulo(titulo);
             return Response.ok(filmes).build();
@@ -44,20 +40,15 @@ public class FilmeResource {
             return Response.ok(filmes).build();
         }
 
-        // Paginação
         if (tamanho > 0) {
             PaginacaoDTO<FilmeDTO> resultado = filmeService.listarPaginado(pagina, tamanho);
             return Response.ok(resultado).build();
         }
 
-        // Lista completa
         List<FilmeDTO> filmes = filmeService.listarTodos();
         return Response.ok(filmes).build();
     }
 
-    /**
-     * GET /filmes/{id} - Busca um filme específico
-     */
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") Long id) {
@@ -65,9 +56,6 @@ public class FilmeResource {
         return Response.ok(filme).build();
     }
 
-    /**
-     * POST /filmes - Cria um novo filme (requer autenticação)
-     */
     @POST
     @Secured
     public Response criar(FilmeDTO dto) {
@@ -77,9 +65,6 @@ public class FilmeResource {
                 .build();
     }
 
-    /**
-     * PUT /filmes/{id} - Atualiza um filme existente (requer autenticação)
-     */
     @PUT
     @Path("/{id}")
     @Secured
@@ -88,9 +73,6 @@ public class FilmeResource {
         return Response.ok(filmeAtualizado).build();
     }
 
-    /**
-     * PATCH /filmes/{id} - Atualização parcial (requer autenticação)
-     */
     @PATCH
     @Path("/{id}")
     @Secured
@@ -99,9 +81,6 @@ public class FilmeResource {
         return Response.ok(filmeAtualizado).build();
     }
 
-    /**
-     * DELETE /filmes/{id} - Remove um filme (requer autenticação)
-     */
     @DELETE
     @Path("/{id}")
     @Secured

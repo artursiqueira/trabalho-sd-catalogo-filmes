@@ -3,9 +3,9 @@ package br.ufes.catalogo.resource;
 import br.ufes.catalogo.dto.FilmeDTO;
 import br.ufes.catalogo.dto.GeneroDTO;
 import br.ufes.catalogo.model.Genero;
-import br.ufes.catalogo.repository.GeneroRepository;
 import br.ufes.catalogo.security.Secured;
 import br.ufes.catalogo.service.FilmeService;
+import br.ufes.catalogo.service.GeneroService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -17,79 +17,53 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class GeneroResource {
 
-    private final GeneroRepository generoRepository = new GeneroRepository();
+    private final GeneroService generoService = new GeneroService();
     private final FilmeService filmeService = new FilmeService();
 
-    /**
-     * GET /generos - Lista todos os gêneros
-     */
     @GET
     public Response listar() {
-        List<GeneroDTO> generos = generoRepository.listarTodos().stream()
-                .map(GeneroDTO::new)
-                .toList();
+        List<GeneroDTO> generos = generoService.listarTodos();
         return Response.ok(generos).build();
     }
 
-    /**
-     * GET /generos/{id} - Busca um gênero específico
-     */
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") Long id) {
-        Genero genero = generoRepository.buscarPorId(id)
-                .orElseThrow(() -> new NotFoundException("Gênero não encontrado"));
-        return Response.ok(new GeneroDTO(genero)).build();
+        GeneroDTO genero = generoService.buscarPorId(id);
+        return Response.ok(genero).build();
     }
 
-    /**
-     * GET /generos/{id}/filmes - Lista filmes de um gênero
-     */
     @GET
     @Path("/{id}/filmes")
     public Response listarFilmesPorGenero(@PathParam("id") Long id) {
+        generoService.buscarPorId(id);
+        
         List<FilmeDTO> filmes = filmeService.buscarPorGenero(id);
         return Response.ok(filmes).build();
     }
 
-    /**
-     * POST /generos - Cria um novo gênero (requer autenticação)
-     */
     @POST
     @Secured
     public Response criar(Genero genero) {
-        Genero generoCriado = generoRepository.salvar(genero);
+        GeneroDTO generoCriado = generoService.criar(genero);
         return Response.status(Response.Status.CREATED)
-                .entity(new GeneroDTO(generoCriado))
+                .entity(generoCriado)
                 .build();
     }
 
-    /**
-     * PUT /generos/{id} - Atualiza um gênero (requer autenticação)
-     */
     @PUT
     @Path("/{id}")
     @Secured
     public Response atualizar(@PathParam("id") Long id, Genero genero) {
-        if (generoRepository.buscarPorId(id).isEmpty()) {
-            throw new NotFoundException("Gênero não encontrado");
-        }
-        genero.setId(id);
-        Genero generoAtualizado = generoRepository.salvar(genero);
-        return Response.ok(new GeneroDTO(generoAtualizado)).build();
+        GeneroDTO generoAtualizado = generoService.atualizar(id, genero);
+        return Response.ok(generoAtualizado).build();
     }
 
-    /**
-     * DELETE /generos/{id} - Remove um gênero (requer autenticação)
-     */
     @DELETE
     @Path("/{id}")
     @Secured
     public Response deletar(@PathParam("id") Long id) {
-        if (generoRepository.buscarPorId(id).isEmpty()) {
-            throw new NotFoundException("Gênero não encontrado");
-        }
-        generoRepository.deletar(id);
+        generoService.deletar(id);
         return Response.noContent().build();
     }
 }

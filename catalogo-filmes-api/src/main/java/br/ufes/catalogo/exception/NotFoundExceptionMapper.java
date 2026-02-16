@@ -12,8 +12,6 @@ import java.util.Map;
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
     @Override
     public Response toResponse(NotFoundException exception) {
-        // Se for 404 do container/servlet (ex.: recurso estático fora do Jersey),
-        // não substitui a resposta padrão.
         Response r = exception.getResponse();
         if (r != null && r.getEntity() == null) {
             return r;

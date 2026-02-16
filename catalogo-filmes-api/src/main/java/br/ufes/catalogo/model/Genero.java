@@ -26,7 +26,6 @@ public class Genero {
     @OneToMany(mappedBy = "genero", fetch = FetchType.LAZY)
     private Set<Filme> filmes = new HashSet<>();
 
-    // Construtores
     public Genero() {
     }
 
@@ -35,7 +34,6 @@ public class Genero {
         this.descricao = descricao;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

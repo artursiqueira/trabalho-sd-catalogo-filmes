@@ -26,10 +26,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         String token = authorizationHeader.substring("Bearer".length()).trim();
 
         try {
-            // Valida o token
             JwtUtil.validarToken(token);
             
-            // Adiciona informações do usuário no contexto
             String username = JwtUtil.getUsernameFromToken(token);
             requestContext.setProperty("username", username);
             requestContext.setProperty("userId", JwtUtil.getUserIdFromToken(token));

@@ -26,7 +26,7 @@ public class Usuario {
 
     @NotBlank(message = "Senha é obrigatória")
     @Column(name = "senha", nullable = false)
-    private String senha; // Hash da senha
+    private String senha;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false, length = 20)
@@ -46,7 +46,6 @@ public class Usuario {
         criadoEm = LocalDateTime.now();
     }
 
-    // Construtores
     public Usuario() {
     }
 
@@ -56,7 +55,6 @@ public class Usuario {
         this.senha = senha;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

@@ -10,7 +10,7 @@ import java.util.Date;
 public class JwtUtil {
     
     private static final String SECRET = "ChaveSecretaSuperSeguraParaOCatalogoDeFilmesUFES2025SistemasDistribuidos";
-    private static final long EXPIRATION_TIME = 86400000; // 24 horas em milissegundos
+    private static final long EXPIRATION_TIME = 86400000;
     private static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
 
     public static String gerarToken(Usuario usuario) {

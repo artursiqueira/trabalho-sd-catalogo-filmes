@@ -31,7 +31,7 @@ public class Filme {
     @NotNull(message = "Duração é obrigatória")
     @Min(value = 1, message = "Duração deve ser maior que 0")
     @Column(name = "duracao", nullable = false)
-    private Integer duracao; // em minutos
+    private Integer duracao;
 
     @NotBlank(message = "Diretor é obrigatório")
     @Size(max = 150, message = "Nome do diretor não pode exceder 150 caracteres")
@@ -77,7 +77,6 @@ public class Filme {
         atualizadoEm = LocalDate.now();
     }
 
-    // Construtores
     public Filme() {
     }
 
@@ -90,7 +89,6 @@ public class Filme {
         this.genero = genero;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

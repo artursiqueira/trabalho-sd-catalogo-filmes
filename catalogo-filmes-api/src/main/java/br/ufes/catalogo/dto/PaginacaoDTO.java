@@ -24,7 +24,6 @@ public class PaginacaoDTO<T> {
         this.ultima = paginaAtual == totalPaginas - 1;
     }
 
-    // Getters e Setters
     public List<T> getConteudo() {
         return conteudo;
     }

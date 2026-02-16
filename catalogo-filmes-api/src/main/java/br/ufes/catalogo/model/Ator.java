@@ -38,7 +38,6 @@ public class Ator {
     @ManyToMany(mappedBy = "atores", fetch = FetchType.LAZY)
     private Set<Filme> filmes = new HashSet<>();
 
-    // Construtores
     public Ator() {
     }
 
@@ -48,7 +47,6 @@ public class Ator {
         this.nacionalidade = nacionalidade;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

@@ -18,54 +18,26 @@ public class AuthResource {
 
     private AuthService authService = new AuthService();
 
-    /**
-     * POST /auth/registrar - Registra um novo usuário
-     */
     @POST
     @Path("/registrar")
     public Response registrar(Usuario usuario) {
-        try {
-            Usuario usuarioCriado = authService.registrar(usuario);
-            
-            Map<String, Object> response = new HashMap<>();
-            response.put("id", usuarioCriado.getId());
-            response.put("username", usuarioCriado.getUsername());
-            response.put("email", usuarioCriado.getEmail());
-            response.put("mensagem", "Usuário registrado com sucesso");
-            
-            return Response.status(Response.Status.CREATED)
-                    .entity(response)
-                    .build();
-        } catch (RuntimeException e) {
-            Map<String, Object> erro = new HashMap<>();
-            erro.put("erro", "Erro ao registrar usuário");
-            erro.put("mensagem", e.getMessage());
-            erro.put("status", 400);
-            
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(erro)
-                    .build();
-        }
+        Usuario usuarioCriado = authService.registrar(usuario);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", usuarioCriado.getId());
+        response.put("username", usuarioCriado.getUsername());
+        response.put("email", usuarioCriado.getEmail());
+        response.put("mensagem", "Usuário registrado com sucesso");
+        
+        return Response.status(Response.Status.CREATED)
+                .entity(response)
+                .build();
     }
 
-    /**
-     * POST /auth/login - Realiza login e retorna token JWT
-     */
     @POST
     @Path("/login")
     public Response login(LoginDTO loginDTO) {
-        try {
-            TokenDTO token = authService.login(loginDTO);
-            return Response.ok(token).build();
-        } catch (RuntimeException e) {
-            Map<String, Object> erro = new HashMap<>();
-            erro.put("erro", "Erro ao fazer login");
-            erro.put("mensagem", e.getMessage());
-            erro.put("status", 401);
-            
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity(erro)
-                    .build();
-        }
+        TokenDTO token = authService.login(loginDTO);
+        return Response.ok(token).build();
     }
 }

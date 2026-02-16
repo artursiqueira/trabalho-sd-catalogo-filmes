@@ -2,10 +2,6 @@ package br.ufes.catalogo.dto;
 
 import br.ufes.catalogo.model.Genero;
 
-/**
- * DTO enxuto para evitar LazyInitializationException ao serializar a entidade Genero.
- * Não expõe a coleção "filmes".
- */
 public class GeneroDTO {
     private Long id;
     private String nome;

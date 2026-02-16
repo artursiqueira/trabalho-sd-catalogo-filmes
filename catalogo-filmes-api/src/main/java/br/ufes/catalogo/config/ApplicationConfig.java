@@ -7,15 +7,12 @@ import org.glassfish.jersey.server.ServerProperties;
 public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
-        // Registra pacotes que contém os recursos REST
         packages("br.ufes.catalogo.resource");
         packages("br.ufes.catalogo.exception");
-        packages("br.ufes.catalogo.security"); // Importante! Inclui AuthenticationFilter
+        packages("br.ufes.catalogo.security");
 
-        // Registra Jackson para serialização/deserialização JSON
         register(JacksonFeature.class);
 
-        // Registra CORS filter
         register(CorsFilter.class);
     }
 }

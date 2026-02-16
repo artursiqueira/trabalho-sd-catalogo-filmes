@@ -6,9 +6,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.ws.rs.ext.ContextResolver;
 import jakarta.ws.rs.ext.Provider;
 
-/**
- * Configura o ObjectMapper do Jersey/Jackson para suportar java.time (LocalDate, etc.).
- */
 @Provider
 public class JacksonConfig implements ContextResolver<ObjectMapper> {
 
@@ -16,9 +13,7 @@ public class JacksonConfig implements ContextResolver<ObjectMapper> {
 
     public JacksonConfig() {
         mapper = new ObjectMapper();
-        // Suporte a java.time.*
         mapper.registerModule(new JavaTimeModule());
-        // Datas como string ISO-8601 (ex: 2026-02-13), ne3o como timestamp nume9rico
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
